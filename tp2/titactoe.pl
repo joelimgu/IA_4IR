@@ -20,9 +20,9 @@
 
 :- use_module(library(clpfd)).
 
-situation_initiale([ [_,_,_],
-                     [_,_,_],
-                     [_,_,_] ]).
+situation_initiale([ [_,o,o],
+                     [o,_,o],
+                     [o,o,_] ]).
 
 	% Convention (arbitraire) : c'est x qui commence
 

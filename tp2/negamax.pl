@@ -52,22 +52,21 @@
 
 	- finalement le couple retourne par negamax est [Coup, V2]
 	avec : V2 is -V1 (cf. convention negamax vue en cours).
-
-A FAIRE : ECRIRE ici les clauses de negamax/5
 	*/
-	negamax(J, Etat, Pmax, Pmax, [_, H]) :-
-	    heuristique(J, Etat, H), !.
 
-    negamax(J, Etat, _, _, [_, H]) :-
-        not(alignement_gagnant(Etat,J)),
-        heuristique(J, Etat, H), !.
+negamax(J, Etat, Pmax, Pmax, [[], Val]):-
+    heuristique(J,Etat,Val), !.
 
-    % TODO
-    negamax(J, Etat, P, Pmax, [C, V2]) :-
-        successeurs(J, Etat, Sucs),
-        loop_negamax(J, P, Pmax, Sucs, [Coup_possible, Valeur]),
-        meilleur([Coup_possible, Valeur], [C,V]),
-        V2 is -V.
+negamax(J, Etat, _, _, [[], H]):-
+    successeurs(J,Etat,[]),
+    heuristique(J,Etat,H),!.
+
+negamax(J, Etat, P, Pmax, [C, V2]):-
+    successeurs(J,Etat,Succs),
+    %print(Succs),
+    loop_negamax(J,P,Pmax,Succs,Couple_Succs),
+    meilleur(Couple_Succs,[C,V]),
+    V2 is -V,!.
 
 
 	/*
@@ -108,7 +107,7 @@ loop_negamax(J,P,Pmax,[[Coup,Suiv]|Succ],[[Coup,Vsuiv]|Reste_Couples]) :-
 
 	/*
 
-A FAIRE : commenter chaque litteral de la 2eme clause de loop_negamax/5,
+    commenter chaque litteral de la 2eme clause de loop_negamax/5,
 	en particulier la forme du terme [_,Vsuiv] dans le dernier
 	litteral ?
 	*/
